@@ -23,10 +23,10 @@ def save_to_database(data):
 
 def handle_request(audio_file):
     while True:
-        # Step 1: Transcribe audio to text
+       
         text = transcribe_audio(audio_file)
 
-        # Step 2: Process the text to extract intent and required slots
+        
         intent_data = get_intent_and_amount(text)
         intent = intent_data.get("intent")
         if intent:
@@ -48,7 +48,7 @@ def handle_request(audio_file):
             st.warning("Mandatory fields missing. Please try again.")
             continue
 
-        # Display extracted data on Streamlit UI
+        
         st.write("### Extracted Data")
         st.text(f"Extracted Text: {text}")
         st.text(f"Intent: {intent}")

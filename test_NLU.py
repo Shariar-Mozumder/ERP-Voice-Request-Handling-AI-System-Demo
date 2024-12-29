@@ -4,15 +4,15 @@ import torch
 from transformers import BertTokenizerFast,BertForTokenClassification
 import numpy as np
 
-# Load tokenizer and model
-tokenizer = BertTokenizerFast.from_pretrained("bert-base-multilingual-cased")
-model = BertForTokenClassification.from_pretrained("./results/checkpoint-100")  # Update with your saved model directory
 
-# Slot label map (use the one from training)
+tokenizer = BertTokenizerFast.from_pretrained("bert-base-multilingual-cased")
+model = BertForTokenClassification.from_pretrained("./results/checkpoint-100")  
+
+
 slot_label_map = {
     0: "O", 1: "B-project_id", 2: "I-project_id", 3: "B-reason", 4: "I-reason",
     5: "B-amount", 6: "I-amount", 7: "B-project_name", 8: "I-project_name",
-    9: "B-status", 10: "I-status",11: "B-riyals", 12: "I-riyals" # Add any other labels as required
+    9: "B-status", 10: "I-status",11: "B-riyals", 12: "I-riyals" 
 }
 
 
@@ -28,7 +28,7 @@ def decode_slots(tokens, predictions, slot_label_map):
         # Handle B- and I- slots
         if label.startswith("B-"):  # Beginning of a new slot
             if current_slot:
-                # Add the previous slot to the result
+                
                 slots[current_slot] = tokenizer.convert_tokens_to_string(current_value)
             current_slot = label[2:]  # Extract slot name
             current_value = [token]  # Start a new slot
@@ -36,17 +36,17 @@ def decode_slots(tokens, predictions, slot_label_map):
             current_value.append(token)
         else:  # No slot or "O"
             if current_slot:
-                # Add the current slot to the result
+                
                 slots[current_slot] = tokenizer.convert_tokens_to_string(current_value)
                 current_slot = None
                 current_value = []
 
-    if current_slot:  # Add the last slot if it exists
+    if current_slot: 
         slots[current_slot] = tokenizer.convert_tokens_to_string(current_value)
 
     return slots
 
-# Adjusted inference function to handle multi-token slots like 'amount'
+
 def predict_intent_and_slots(text, model, tokenizer, slot_label_map):
     encoding = tokenizer(
         text,
@@ -64,13 +64,13 @@ def predict_intent_and_slots(text, model, tokenizer, slot_label_map):
         predictions = torch.argmax(logits, dim=2).squeeze().tolist()
 
     tokens = tokenizer.convert_ids_to_tokens(input_ids.squeeze().tolist())
-    predictions = predictions[:len(tokens)]  # Trim predictions to match tokenized text
+    predictions = predictions[:len(tokens)]  
 
-    # Decode slots from predictions
+   
     slots = decode_slots(tokens, predictions, slot_label_map)
 
-    # Mock intent detection (use a separate model if needed)
-    intent = "mock_intent"  # Replace this logic if you want actual intent classification
+    
+    intent = "mock_intent" 
 
     return {"utterance": text, "slots": slots}
 

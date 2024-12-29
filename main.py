@@ -15,10 +15,10 @@ def save_to_database(data):
         json.dump(data, db_file, indent=4)
 
 def handle_request(audio_file):
-    # Step 1: Transcribe audio to text
+    
     text = transcribe_audio_raw(audio_file)
     
-    # Step 2: Process the text to extract intent and required slots
+    
     intent_data = get_intent_and_amount(text)
     intent=intent_data.get('intent')
     intent=intent.replace("_", " ").title()
@@ -43,7 +43,7 @@ def handle_request(audio_file):
                 "status": slots.get("status"),
             }
 
-            # Load existing database and append the new request
+           
             database = load_database()
             database["requests"].append(request_data)
             save_to_database(database)
@@ -60,7 +60,7 @@ def handle_request(audio_file):
     
 
 if __name__ == "__main__":
-    # Placeholder: the path to an audio file
+    
     user_audio = "input_audio.wav"
     # audio_file = open(user_audio, "rb")
     

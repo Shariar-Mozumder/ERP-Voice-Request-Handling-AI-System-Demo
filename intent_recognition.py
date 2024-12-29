@@ -3,10 +3,10 @@ import re
 from sentence_transformers import SentenceTransformer, util
 from typing import Dict, Any
 
-# Load the model for sentence similarity
+
 model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
 
-# Define the dataset
+# Define the Intent Rules
 dataset = {
     "data": [
         {
@@ -63,12 +63,12 @@ def get_intent_and_amount(text: str) -> Dict[str, Any]:
     best_match = None
     best_score = 0
     intent = "unknown"
-    amount_data = extract_amount_with_context(text)  # Extract amount from the user input text
+    amount_data = extract_amount_with_context(text)  
 
     # Now, let's detect the intent from the dataset
     for intent_data in dataset["data"]:
         for utterance in intent_data["utterances"]:
-            # Compute similarity using the model
+            # Compute similarity
             similarity_score = util.pytorch_cos_sim(
                 model.encode(text, convert_to_tensor=True),
                 model.encode(utterance["text"], convert_to_tensor=True)
@@ -81,7 +81,7 @@ def get_intent_and_amount(text: str) -> Dict[str, Any]:
 
     return {"intent": intent, "amount_data": amount_data, "score": best_score}
 
-# Example usage
+# Example test
 user_text = "Hey, I need to request money for a project name Abha University and id is 123 and the amount is 500 riyals"
 result = get_intent_and_amount(user_text)
 print(result)
