@@ -72,3 +72,26 @@ Note: During the demo, the app may show some minor errors in Streamlit. These do
 -**Example Utterances**:
 -  "I need to request money for project 223 to buy some tools, the amount I need is 500 riyals."
 -  "Please add a money request for the project Abha University for 300 riyals."
+
+### Intent: `submit_task`
+-**Example Utterances**:
+-  "I have completed the task 1025, please mark it as done."
+-  "Mark task 3054 as finished in the system."
+
+### Intent: `get_project_status`
+-**Example Utterances**:
+-  "Can you tell me the status of project 223?"
+-  "What is the current progress on project Abha University?"
+
+
+## Key Features
+-  Voice Interaction: Converts user speech into actionable text using Whisper STT.
+-  Multilingual NLU: Handles intent recognition and slot filling with fine-tuned BERT.
+-  Dynamic Intent Rules: Recognizes predefined intents and processes user queries accordingly.
+-  Database Operations: Simple JSON-based database for storing and retrieving ERP requests.
+-  Interactive Demo: Streamlit app for showcasing project functionality.
+
+## Future Improvements
+-  Enhance the dataset for better intent recognition accuracy.
+-  Resolve minor errors in Streamlit app for smoother user experience.
+-  Integrate a more robust APIs and database for production-grade deployment.
