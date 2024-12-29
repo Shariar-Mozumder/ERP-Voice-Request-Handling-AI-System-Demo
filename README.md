@@ -70,5 +70,5 @@ Note: During the demo, the app may show some minor errors in Streamlit. These do
 ## Intent Examples
 ### Intent: `request_money`
 -**Example Utterances**:
-  -"I need to request money for project 223 to buy some tools, the amount I need is 500 riyals."
-  -"Please add a money request for the project Abha University for 300 riyals."
+-  "I need to request money for project 223 to buy some tools, the amount I need is 500 riyals."
+-  "Please add a money request for the project Abha University for 300 riyals."
